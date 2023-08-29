@@ -14,6 +14,9 @@ public class Tabs extends JTabbedPane {
     
     public JMenu menu = new JMenu("tabs");
 
+    public Tabs() {
+    }
+    
     public Tabs(DB db) {
         for (Recordset r : db.tables()) {
             Grid grid = new Grid(r);

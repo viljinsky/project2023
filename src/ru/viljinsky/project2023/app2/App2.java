@@ -1,109 +1,127 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ru.viljinsky.project2023.app2;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import ru.viljinsky.project2023.Base;
+import ru.viljinsky.project2023.CommandListener;
+import ru.viljinsky.project2023.CommandManager;
 import ru.viljinsky.project2023.DB;
+import ru.viljinsky.project2023.FileManager;
+import ru.viljinsky.project2023.Grid;
+import ru.viljinsky.project2023.GridAdapter;
 import ru.viljinsky.project2023.Recordset;
+import ru.viljinsky.project2023.Tab;
+import ru.viljinsky.project2023.Tabs;
 
-/**
- *
- * @author viljinsky
- */
-class AppDB2 extends HashMap<String, Recordset> implements DB {
+class TabGrid extends Tab {
+    
+    Grid grid;
+    
+    public TabGrid(DB db, Recordset recordset) {
+        super(db, recordset.getName());
+        grid = new Grid(recordset);
+        add(new JScrollPane(grid));
+    }
+    
+}
 
-    private static final String TABLE1 = "table1";
-    private static final String TABLE2 = "table2";
-    private static final String TABLE3 = "table3";
-    private static final String TABLE4 = "table4";
-    private static final String TABLE5 = "table5";
-
-    private static final String COLUMN1 = "column1";
-    private static final String COLUMN2 = "column2";
-    private static final String COLUMN3 = "column3";
-    private static final String COLUMN4 = "column4";
-    private static final String COLUMN5 = "column5";
-    private static final String COLUMN6 = "column6";
-
-    Recordset createRecordset(String tableName) {
-        switch (tableName) {
-            case TABLE1:
-            case TABLE2:
-            case TABLE3:
-            case TABLE4:
-            case TABLE5:
-                return new Recordset(tableName, new String[]{COLUMN1, COLUMN2, COLUMN3, COLUMN4, COLUMN5, COLUMN6});
-            default:
-                throw new RuntimeException("unknow tableName " + tableName);
+class AppTabs extends Tabs implements CommandListener {
+    
+    public static final String ADD = "add";
+    public static final String EDIT = "edit";
+    public static final String DELETE = "delete";
+    public static final String POST = "post";
+    public static final String CANCEL = "cancel";
+    public static final String FIND = "find";
+    
+    @Override
+    public void doCommand(String command) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public boolean updateCommand(String command) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    CommandManager commandManager = new CommandManager(this);
+    GridAdapter gridAdapter = new GridAdapter(commandManager, new String[]{ADD, EDIT, DELETE});
+    
+    public AppTabs(DB db) {
+        for (Recordset r : db.tables()) {
+            add(new TabGrid(db, r));
         }
-    }
-
-    public AppDB2() {
-        for (String tableName : new String[]{TABLE1, TABLE2, TABLE3, TABLE4, TABLE5}) {
-            put(tableName, createRecordset(tableName));
-        }
-    }
-
-    @Override
-    public Iterable<Recordset> tables() {
-        List list = new ArrayList();
-        for (String tableName : keySet()) {
-            list.add(get(tableName));
-        }
-        return list;
-    }
-
-    @Override
-    public Recordset table(String tableName) {
-        return containsKey(tableName) ? get(tableName) : null;
-    }
-
-    @Override
-    public Recordset query(String sql, Object... args) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void execute(String sql, Object... args) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void commit() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void rallback() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void close() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        addChangeListener(e -> {
+            TabGrid tGrid = (TabGrid) getSelectedTab();
+            if (tGrid != null) {
+                System.out.println(tGrid.getName());
+                gridAdapter.setGrid(tGrid.grid);
+            }
+            
+        });
     }
 }
 
 public class App2 extends Base {
-
-    DB db = new AppDB2();
-
-    public App2() {
-
-        for (Recordset recordset : db.tables()) {
-            recordset.print();
-        }
-
+    
+    DB db;
+    FileManager fileManager = new FileManager(this, null);
+    Tabs tabs;
+    
+    public void open() {
+        tabs = new AppTabs(db);
+        add(tabs);
+        addMenu(tabs.menu());
+        revalidate();
+        repaint();
     }
-
+    
+    public void close() {        
+        if (tabs != null) {
+            removeMenu(tabs.menu());
+            remove(tabs);
+            tabs = null;
+            repaint();
+            revalidate();
+        }
+        
+    }
+    
+    public App2() {
+        super();
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(800, 600));
+        addStatusBar();
+        addMenu(fileManager.menu());
+        
+    }
+    
+    @Override
+    public void windowOpened(WindowEvent e) {
+        db = new AppDB2();
+        open();
+    }
+    
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if (db != null) try {
+            db.close();
+            close();
+            db = null;
+            super.windowClosing(e);
+        } catch (Exception h) {
+            showMessage(h);
+        } else {
+            super.windowClosing(e);
+        }
+        
+    }
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new App2());
     }
-
+    
 }

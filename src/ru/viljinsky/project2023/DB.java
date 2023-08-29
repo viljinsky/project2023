@@ -9,6 +9,8 @@ package ru.viljinsky.project2023;
  * @author viljinsky
  */
 public interface DB extends AutoCloseable {
+    
+    public String[] primary();
 
     public abstract Iterable<Recordset> tables();
 

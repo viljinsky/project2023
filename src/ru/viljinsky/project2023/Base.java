@@ -27,7 +27,6 @@ public class Base extends Container implements WindowListener, Runnable {
     JMenuBar menuBar;
     public String title = "no title";
 
-    
 
     protected final void addMenu(JMenu menu) {
         if (menuBar == null) {
@@ -88,8 +87,10 @@ public class Base extends Container implements WindowListener, Runnable {
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
+    
     public void run() {
         frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(this);
         frame.setContentPane(this);
         if (menuBar != null) {

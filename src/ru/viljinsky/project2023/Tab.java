@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ru.viljinsky.project2023;
 
 import java.awt.BorderLayout;
@@ -16,6 +12,7 @@ public class Tab extends Base implements CommandListener {
 
     public Tab(DB db, String name) {
         setLayout(new BorderLayout());
+        setName(name);
         this.title = name;
         this.db = db;
         setName(name);

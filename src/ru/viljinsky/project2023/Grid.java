@@ -52,4 +52,9 @@ public class Grid extends JTable {
         return result;
     }
     
+    public Iterable<Values> values(){
+        GridModel model = (GridModel)getModel();
+        return model.recordset.values();
+    }
+    
 }
