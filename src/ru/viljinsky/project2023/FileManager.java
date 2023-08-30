@@ -5,6 +5,8 @@
 package ru.viljinsky.project2023;
 
 import java.awt.Component;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 
@@ -13,6 +15,15 @@ import javax.swing.JOptionPane;
  * @author viljinsky
  */
 public class FileManager implements CommandListener {
+    
+    File file = new File("test.db");
+    
+    public File recentFile(){
+        if (file.exists()){
+            return file;
+        }
+        return null;
+    }
     
     Component parent;
     public static final String REOPEN = "reopen";
@@ -25,14 +36,26 @@ public class FileManager implements CommandListener {
     FileManagerListener fileManagerListener;
 
     public void create() throws Exception {
+        file = null;
         fileManagerListener.fileCreate(new FileManagerEvent(this, null));
     }
 
     public void open() throws Exception {
-        fileManagerListener.fileOpen(new FileManagerEvent(this, null));
+        JFileChooser fileChooser = new JFileChooser(".");
+        int retVal = fileChooser.showOpenDialog(parent);
+        if (retVal == JFileChooser.APPROVE_OPTION){
+            open(fileChooser.getSelectedFile());
+            
+        }
+    }
+    
+    public void open(File file) throws Exception{
+        this.file = file;
+        fileManagerListener.fileOpen(new FileManagerEvent(this,file ));
     }
 
     public void close() throws Exception {
+        file = null;
         fileManagerListener.fileClose(new FileManagerEvent(this));
     }
 

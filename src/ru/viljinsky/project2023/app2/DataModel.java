@@ -41,6 +41,7 @@ public interface DataModel {
     public static final String SORT_ORDER = "sort_order";
     public static final String HOUR_PER_DAY = "hour_per_day";
     public static final String HOUR_PER_WEEK = "hour_per_week";
+    public static final String GROUP_TYPE = "group_type";
     public static final String GROUP_TYPE_ID = "group_type_id";
     public static final String DIFFICULTY = "difficulty";
     
@@ -63,7 +64,7 @@ public interface DataModel {
     public static final String SKILL_NAME = "skill_name";
     
     
-    public static final String CURRICULUM = "curriculum_name";
+    public static final String CURRICULUM = "curriculum";
     public static final String CURRICULUM_ID = "curriculum_id";
     public static final String CURRICULUM_NAME = "curriculum_name";
     
@@ -155,6 +156,10 @@ public interface DataModel {
     
     public static final int MAX_DIFFICULTY = 20;
 
+    public static final String ATTR = "attr";
+    
+    public static final String SUBJECT_CONDITION = "subject_condition";
+    public static final String CURRICULUM_CONDITION = "curriculum_condition";
     // condition
     public static final String CONDITION = "condition";
     public static final String CONDITION_ID = "condition_id";
@@ -166,8 +171,10 @@ public interface DataModel {
 
     // curriculum_detail
 
+    public static final String GROUP_SEQUENCE = "group_sequence";
     public static final String GROUP_SEQUENCE_ID = "group_sequence_id";
     public static final String IS_STREAM = "is_stream";
+    public static final String LESSON_TYPE = "lesson_type";
     public static final String LESSON_TYPE_ID = "lesson_type_id";
     public static final String LESSON_TYPE_NAME = "lesson_type_name";
 
@@ -178,6 +185,7 @@ public interface DataModel {
     public static final String GROUP_ID = "group_id";
     public static final String TEACHER = "teacher";
     public static final String ROOM = "room";
+    public static final String WEEK = "week";
     public static final String WEEK_ID = "week_id";
     public static final String WEEK_NAME = "week_name";
     public static final String STREAM_NAME = "stream_name";
@@ -229,6 +237,7 @@ public interface DataModel {
 
     // stream
 
+    public static final String STREAM = "stream";
     public static final String STREAM_GROUP = "stream_group";
     public static final String STREAM_ID = "stream_id";
 
@@ -266,7 +275,7 @@ public interface DataModel {
     public static final String HOLIDAY_NAME ="holiday_name";
     
     public static final String DEPART = "depart";
-    public static final String SCHEDULE = "shedule";
+    public static final String SCHEDULE = "schedule";
     public static final String SCHEDULE_STATE = "schedule_state";
         
 }

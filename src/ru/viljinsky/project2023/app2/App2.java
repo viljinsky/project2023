@@ -3,6 +3,7 @@ package ru.viljinsky.project2023.app2;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import ru.viljinsky.project2023.Base;
@@ -10,6 +11,8 @@ import ru.viljinsky.project2023.CommandListener;
 import ru.viljinsky.project2023.CommandManager;
 import ru.viljinsky.project2023.DB;
 import ru.viljinsky.project2023.FileManager;
+import ru.viljinsky.project2023.FileManagerEvent;
+import ru.viljinsky.project2023.FileManagerListener;
 import ru.viljinsky.project2023.Grid;
 import ru.viljinsky.project2023.GridAdapter;
 import ru.viljinsky.project2023.Recordset;
@@ -65,10 +68,41 @@ class AppTabs extends Tabs implements CommandListener {
     }
 }
 
-public class App2 extends Base {
+public class App2 extends Base implements FileManagerListener{
+
+    @Override
+    public void fileCreate(FileManagerEvent e) throws Exception {
+        close();
+        db = new AppDB2();
+        open();
+    }
+
+    @Override
+    public void fileOpen(FileManagerEvent e) throws Exception {
+        close();
+        db = new AppDB2(e.file);
+        open();
+    }
+
+    @Override
+    public void fileSave(FileManagerEvent e) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void fileClose(FileManagerEvent e) throws Exception {
+        close();
+    }
+
+    @Override
+    public void fileRename(FileManagerEvent e) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
     
     DB db;
-    FileManager fileManager = new FileManager(this, null);
+    FileManager fileManager = new FileManager(this, this);
     Tabs tabs;
     
     public void open() {
@@ -77,6 +111,7 @@ public class App2 extends Base {
         addMenu(tabs.menu());
         revalidate();
         repaint();
+        setStatusText("file :"+fileManager.recentFile());
     }
     
     public void close() {        
@@ -86,6 +121,7 @@ public class App2 extends Base {
             tabs = null;
             repaint();
             revalidate();
+            setStatusText("no connection");
         }
         
     }
@@ -101,8 +137,11 @@ public class App2 extends Base {
     
     @Override
     public void windowOpened(WindowEvent e) {
-        db = new AppDB2();
-        open();
+        try{
+            fileManager.open(fileManager.recentFile());
+        } catch ( Exception h){
+            System.err.println(""+h.getMessage());
+        }
     }
     
     @Override

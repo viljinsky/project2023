@@ -5,7 +5,9 @@
 package ru.viljinsky.project2023;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -92,8 +94,10 @@ public class Recordset extends ArrayList<Object[]> {
         return -1;
     }
 
-    public Class<?> getColumnClass(int index) {
-        return Integer.class;
+    public Map<Integer,Class<?>> classMap = new HashMap<>();
+    
+    public Class<?> getColumnClass(int index) {        
+        return classMap.containsKey(index)?classMap.get(index):Object.class;
     }
 
     public void append() {
