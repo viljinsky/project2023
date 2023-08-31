@@ -96,7 +96,7 @@ public class FileManager implements CommandListener {
     public boolean updateCommand(String command) {
         return true;
     }
-    CommandManager commandManager = new CommandManager(this, CREATE, null, OPEN, REOPEN, null, SAVE, SAVE_AS, CLOSE, null, EXIT);
+    public CommandManager commandManager = new CommandManager(this, CREATE, null, OPEN, REOPEN, null, SAVE, SAVE_AS, CLOSE, null, EXIT);
 
     public FileManager(Component parent, FileManagerListener fileManagerListener) {
         this.parent = parent;

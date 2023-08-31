@@ -37,7 +37,7 @@ public class Tabs extends JTabbedPane {
     }
 
     public void addTab(Tab tab) {
-        super.addTab(tab.title, tab);
+        super.addTab(tab.getTitle(), tab);
         menu.add(new TabAction(tab));
     }
 
@@ -46,7 +46,7 @@ public class Tabs extends JTabbedPane {
         Tab tab;
 
         public TabAction(Tab tab) {
-            super(tab.title);
+            super(tab.getTitle());
             this.tab = tab;
         }
 

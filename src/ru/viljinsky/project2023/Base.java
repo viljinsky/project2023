@@ -25,8 +25,17 @@ public class Base extends Container implements WindowListener, Runnable {
     StatusBar statusBar;
     CommandBar commandBar;
     JMenuBar menuBar;
-    public String title = "no title";
+    String title = "no title";
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    
 
     protected final void addMenu(JMenu menu) {
         if (menuBar == null) {
@@ -47,7 +56,9 @@ public class Base extends Container implements WindowListener, Runnable {
     }
 
     public void setStatusText(String text) {
-        statusBar.setStatusText(text);
+        if (statusBar!=null){
+            statusBar.setStatusText(text);
+        }
     }
 
     protected final void addCommandBar(ArrayList<Action> actions) {

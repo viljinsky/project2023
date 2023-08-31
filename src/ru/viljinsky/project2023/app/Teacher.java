@@ -25,6 +25,7 @@ public class Teacher extends Tab {
     
     Grid grid = new Grid(new Recordset());
     CommandManager commandManager = new CommandManager(this, commands);
+    GridAdapter adapter = new GridAdapter(commandManager, ADD,EDIT,DELETE);
     
     Values defaultValues(){
         Values values = new Values();
@@ -104,8 +105,8 @@ public class Teacher extends Tab {
         super(db, "teacher");
         addCommandBar(commandManager);
         grid.setRecordset(db.table("r1"));
+        grid.setGridAdapter(adapter);
         add(new JScrollPane(grid));        
-        GridAdapter adapter = new GridAdapter(grid, commandManager, ADD,EDIT,DELETE);        
     }
 
     public static void main(String[] args) {

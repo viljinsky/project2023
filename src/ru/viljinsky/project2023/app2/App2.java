@@ -3,7 +3,6 @@ package ru.viljinsky.project2023.app2;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import ru.viljinsky.project2023.Base;
@@ -14,7 +13,6 @@ import ru.viljinsky.project2023.FileManager;
 import ru.viljinsky.project2023.FileManagerEvent;
 import ru.viljinsky.project2023.FileManagerListener;
 import ru.viljinsky.project2023.Grid;
-import ru.viljinsky.project2023.GridAdapter;
 import ru.viljinsky.project2023.Recordset;
 import ru.viljinsky.project2023.Tab;
 import ru.viljinsky.project2023.Tabs;
@@ -51,7 +49,6 @@ class AppTabs extends Tabs implements CommandListener {
     }
     
     CommandManager commandManager = new CommandManager(this);
-    GridAdapter gridAdapter = new GridAdapter(commandManager, new String[]{ADD, EDIT, DELETE});
     
     public AppTabs(DB db) {
         for (Recordset r : db.tables()) {
@@ -61,7 +58,6 @@ class AppTabs extends Tabs implements CommandListener {
             TabGrid tGrid = (TabGrid) getSelectedTab();
             if (tGrid != null) {
                 System.out.println(tGrid.getName());
-                gridAdapter.setGrid(tGrid.grid);
             }
             
         });

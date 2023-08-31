@@ -38,7 +38,7 @@ public class App extends Base implements CommandListener, FileManagerListener {
         revalidate();
         tabbedPane.addChangeListener(e -> {
             Tab tab = tabbedPane.getSelectedTab();
-            setStatusText(tab == null ? "no tab" : tab.title);
+            setStatusText(tab == null ? "no tab" : tab.getTitle());
         });
         tabbedPane.setSelectedIndex(0);
     }

@@ -13,7 +13,7 @@ public class Tab extends Base implements CommandListener {
     public Tab(DB db, String name) {
         setLayout(new BorderLayout());
         setName(name);
-        this.title = name;
+        setTitle(name);
         this.db = db;
         setName(name);
     }

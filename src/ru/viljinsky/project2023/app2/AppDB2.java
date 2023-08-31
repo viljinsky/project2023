@@ -56,7 +56,7 @@ class AppDB2 extends HashMap<String, Recordset> implements DB, DataModel {
         columns.put(SUBJECT_DOMAIN, new String[]{SUBJECT_DOMAIN_ID, SUBJECT_DOMAIN_NAME});
         columns.put(SUBJECT, new String[]{SUBJECT_ID, SUBJECT_NAME,SUBJECT_DOMAIN_ID, GROUP_TYPE_ID,HOUR_PER_WEEK,HOUR_PER_DAY,DIFFICULTY,SORT_ORDER,COLOR});
         columns.put(SUBJECT_GROUP, new String[]{DEPART_ID, GROUP_ID, SUBJECT_ID,SKILL_ID,CURRICULUM_ID,TEACHER_ID,ROOM_ID,WEEK_ID,STREAM_ID,PUPIL_COUNT});
-        columns.put(SCHEDULE, new String[]{DAY_ID, BELL_ID, DEPART_ID, GROUP_ID, SUBJECT_ID});
+        columns.put(SCHEDULE, new String[]{DAY_ID, BELL_ID,DEPART_ID, GROUP_ID, SUBJECT_ID,TEACHER_ID,ROOM_ID});
         columns.put(SCHEDULE_STATE, new String[]{SCHEDULE_STATE_ID, SCHEDULE_STATE_NAME});
         columns.put(TEACHER, new String[]{TEACHER_ID, LAST_NAME, FIRST_NAME, PATRONYMIC, PROFILE_ID, SHIFT_ID,ROOM_ID});
         columns.put(ROOM, new String[]{ROOM_ID, BUILDING_ID, ROOM_NAME, SHIFT_ID, PROFILE_ID});
@@ -69,6 +69,15 @@ class AppDB2 extends HashMap<String, Recordset> implements DB, DataModel {
         primary.put(BELL_LIST, new String[]{BELL_ID});
         primary.put(SKILL, new String[]{SKILL_ID});
         primary.put(DAY_LIST, new String[]{DAY_ID});
+        primary.put(DEPART, new String[]{DEPART_ID});
+        primary.put(TEACHER,new String[]{TEACHER_ID});
+        primary.put(BUILDING,new String[]{BUILDING_ID});
+        primary.put(ROOM,new String[]{ROOM_ID});
+        primary.put(SUBJECT_GROUP,new String[]{DEPART_ID,SUBJECT_ID,GROUP_ID});
+        
+        primary.put(CURRICULUM_DETAIL,new String[]{SKILL_ID,CURRICULUM_ID,SUBJECT_ID});
+        primary.put(CURRICULUM,new String[]{CURRICULUM_ID});
+        primary.put(SCHEDULE, new String[]{DAY_ID,BELL_ID,WEEK_ID,DEPART_ID,GROUP_ID,SUBJECT_ID});
     }
     
     private static final Map<String, String> columnHeaders = new HashMap<>();
@@ -134,7 +143,7 @@ class AppDB2 extends HashMap<String, Recordset> implements DB, DataModel {
                     while (res.next()) {
                         Object[] p = new Object[recordset.columnCount()];
                         for (int column = 0; column < p.length; column++) {
-                            p[column] = res.getObject(recordset.columnName(column));
+                           p[column] = res.getObject(recordset.columnName(column));
 
                         }
                         recordset.add(p);

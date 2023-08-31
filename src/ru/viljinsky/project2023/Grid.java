@@ -5,16 +5,123 @@
 package ru.viljinsky.project2023;
 
 import java.awt.KeyboardFocusManager;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.table.TableColumnModel;
 
 public class Grid extends JTable {
+    
+    private GridAdapter gridAdapter;
+    private MouseAdapter mouseAdater = new MouseAdapter() {
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            showPopupMenu(e);
+        }
 
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            showPopupMenu(e);
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getClickCount()==2){
+                gridAdapter.doCommand(gridAdapter.commans(1));
+            }
+        }
+    };
+    
+    JPopupMenu popupMenu  = new JPopupMenu();
+    
+    public void showPopupMenu(MouseEvent e){
+        if (e.isPopupTrigger()){
+            popupMenu.show(this, e.getX(),e.getY());
+        }
+    }
+    
+    public void showPopupMenu(){
+        Rectangle r = getCellRect(getSelectedRow(), getSelectedColumn(), true);
+        popupMenu.show(this, r.x,r.y+r.height);
+    }
+
+    public void setPopupMenu(JPopupMenu popuMenu) {
+        this.popupMenu = popuMenu;
+    }
+    
+    public void setGridAdapter(GridAdapter gridAdapter){
+        if (this.gridAdapter!=null){
+            removeGridArapter();
+        }
+        
+        this.gridAdapter = gridAdapter;
+        
+        String command;
+        
+        command = gridAdapter.commans(0);
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,0), command);
+        getActionMap().put(command, gridAdapter.actionByName(command));
+        
+        command = gridAdapter.commans(1);
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), command);
+        getActionMap().put(command, gridAdapter.actionByName(command));
+        
+        command = gridAdapter.commans(2);
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0), command);
+        getActionMap().put(command, gridAdapter.actionByName(command));
+        
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_CONTEXT_MENU,0),"popup");
+        getActionMap().put("popup",new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPopupMenu();
+            }
+        });
+                
+        addMouseListener(mouseAdater);
+        
+    }
+    
+    public void removeGridArapter(){
+        if (gridAdapter!=null){
+            
+            String command ;
+            command = gridAdapter.commans(0);
+            getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,0));
+            
+            command = gridAdapter.commans(1);
+            getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0));
+            command = gridAdapter.commans(2);
+            getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0));
+            
+            getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_CONTEXT_MENU,0));
+            
+            removeMouseListener(mouseAdater);
+                        
+            gridAdapter = null;
+        }
+    }
+
+    public Grid() {
+        this(new Recordset());
+    }
+
+        
     public Grid(Recordset recordset) {
         setAutoCreateColumnsFromModel(false);
         setAutoResizeMode(AUTO_RESIZE_OFF);
         setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
         setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null);
+        KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+        getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enter, "Solve");
+        
         setModel(new GridModel(recordset));
         setColumnModel(new GridColumnModel(recordset));
     }
