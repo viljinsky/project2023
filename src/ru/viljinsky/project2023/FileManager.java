@@ -51,7 +51,9 @@ public class FileManager implements CommandListener {
     
     public void open(File file) throws Exception{
         this.file = file;
+        if(file!=null){
         fileManagerListener.fileOpen(new FileManagerEvent(this,file ));
+        }
     }
 
     public void close() throws Exception {

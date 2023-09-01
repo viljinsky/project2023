@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ import ru.viljinsky.project2023.Recordset;
  *
  * @author viljinsky
  */
-class AppDB2 extends HashMap<String, Recordset> implements DB, DataModel {
+class AppDB extends HashMap<String, Recordset> implements DB, DataModel {
 
     private static final String[] tables = {
         DAY_LIST, BELL_LIST, SHIFT, SHIFT_TYPE, SHIFT_DETAIL, SKILL, CURRICULUM, CURRICULUM_DETAIL, DEPART, TEACHER, ROOM, BUILDING,
@@ -143,12 +142,12 @@ class AppDB2 extends HashMap<String, Recordset> implements DB, DataModel {
         return DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
     }
 
-    public AppDB2() throws Exception{
+    public AppDB() throws Exception{
         this(null);
         
     }
     
-    public AppDB2(File file) throws Exception {
+    public AppDB(File file) throws Exception {
         Class.forName("org.sqlite.JDBC");
         for (String tableName : tables) {
             put(tableName, createRecordset(tableName));
