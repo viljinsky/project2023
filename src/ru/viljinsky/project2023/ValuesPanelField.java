@@ -27,7 +27,7 @@ public class ValuesPanelField extends JComponent {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
-        textField = new JTextField(String.valueOf(fieldValue));
+        textField = new JTextField(fieldValue==null?"":String.valueOf(fieldValue));
         label = new JLabel(fieldName);
         add(label);
         add(Box.createHorizontalStrut(3));

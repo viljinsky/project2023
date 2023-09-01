@@ -75,6 +75,10 @@ public class AppDB extends ArrayList<Recordset> implements DB {
     public String[] primary() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public void open() {
+    }
     
     
     

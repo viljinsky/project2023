@@ -121,7 +121,7 @@ public class Base extends Container implements WindowListener, Runnable {
     }
 
     public boolean confirm(String message) {
-        return JOptionPane.showConfirmDialog(getParent(), message, title, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(getParent(), message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
     
 }

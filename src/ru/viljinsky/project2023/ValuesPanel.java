@@ -17,6 +17,15 @@ import javax.swing.border.EmptyBorder;
  * @author viljinsky
  */
 public class ValuesPanel extends Container implements BaseDialogListener {
+    String title = "valuesPanel";
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
     
     Values values;
     public ValuesPanelListener valuesPanelListener;
@@ -83,6 +92,7 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         wrapper.setBorder(new EmptyBorder(6, 3, 6, 3));
         wrapper.add(this, BorderLayout.PAGE_START);
         BaseDialog baseDialog = new BaseDialog(wrapper);
+        baseDialog.setTitle(title);
         baseDialog.baseDialogListener = this;
         baseDialog.showModal(parent);
         baseDialog.dispose();

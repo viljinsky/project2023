@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
@@ -40,6 +42,16 @@ public class Grid extends JTable {
     };
     
     JPopupMenu popupMenu  = new JPopupMenu();
+    
+    public void setCommand(ArrayList<Action> actions){
+        for(Action a:actions){
+            if (a==null){
+                popupMenu.addSeparator();
+            } else {
+                popupMenu.add(a);
+            }
+        }
+    }
     
     public void showPopupMenu(MouseEvent e){
         if (e.isPopupTrigger()){

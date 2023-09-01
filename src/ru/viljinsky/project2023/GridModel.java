@@ -14,6 +14,10 @@ public class GridModel extends AbstractTableModel {
     
     Recordset recordset;
 
+    public Recordset getRecordset() {
+        return recordset;
+    }
+
     public GridModel(Recordset recordset) {
         this.recordset = recordset;
     }
