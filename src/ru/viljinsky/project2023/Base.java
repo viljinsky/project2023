@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  * @author viljinsky
  */
 public class Base extends Container implements WindowListener, Runnable {
-    
+
     JFrame frame;
     StatusBar statusBar;
     CommandBar commandBar;
@@ -34,8 +34,6 @@ public class Base extends Container implements WindowListener, Runnable {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    
 
     protected final void addMenu(JMenu menu) {
         if (menuBar == null) {
@@ -56,7 +54,7 @@ public class Base extends Container implements WindowListener, Runnable {
     }
 
     public void setStatusText(String text) {
-        if (statusBar!=null){
+        if (statusBar != null) {
             statusBar.setStatusText(text);
         }
     }
@@ -98,7 +96,7 @@ public class Base extends Container implements WindowListener, Runnable {
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
-    
+
     public void run() {
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -124,4 +122,12 @@ public class Base extends Container implements WindowListener, Runnable {
         return JOptionPane.showConfirmDialog(getParent(), message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
     
+    public void open(){
+        throw new UnsupportedOperationException("open unsupported yet");
+    }
+    
+    public void close(){
+        throw new UnsupportedOperationException("close unsupported yet");
+    }
+
 }

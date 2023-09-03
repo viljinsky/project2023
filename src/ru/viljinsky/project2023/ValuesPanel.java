@@ -42,10 +42,19 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         ValuesPanelField field = new ValuesPanelField(fieldName, fieldValue);
         add(field);
     }
+    
+    public ValuesPanel(Recordset recordset,String... columns){
+        columns = columns.length==0?recordset.columns:columns;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        for (String name : columns) {
+            Class<?> c = recordset.getColumnClass(recordset.columnIndex(name));
+            System.out.println(c.getName());
+            addValuesField(name, null);
+        }
+    }
 
     public ValuesPanel(String... fieldName) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.values = values;
         for (String name : fieldName) {
             addValuesField(name, null);
         }
@@ -79,7 +88,7 @@ public class ValuesPanel extends Container implements BaseDialogListener {
     }
 
     public Values getValues() {
-        Values result = new Values();
+        Values result = values;
         for (int i = 0; i < fieldCount(); i++) {
             ValuesPanelField field = field(i);
             result.put(field.fieldName, field.getValue());

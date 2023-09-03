@@ -4,6 +4,8 @@
  */
 package ru.viljinsky.project2023;
 
+import java.awt.Container;
+import java.util.Date;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -11,18 +13,63 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+class VPF<T> extends Container{
+    
+    T value;
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+    
+    public static void main(String[] args) {
+        
+        Object[] data  = {10,"String",10.23,new Date()};
+        
+        VPF<Integer> vpfInteger = new VPF<>();
+        
+        VPF<String> vpfString = new VPF<>();
+        
+        VPF<Double> vpfDouble = new VPF<>();
+        VPF<Date> vpfDate = new VPF<>();
+        
+        for(Object p: data){
+            VPF vpf = new VPF();
+            vpf.setValue(p);
+            Object r = vpf.getValue();
+            System.out.println(r +" " + r.getClass().getName());
+        }
+        
+//        vpfInteger.setValue(10);
+//        System.out.println(vpfInteger.getValue());
+//        
+//        vpfString.setValue("value");
+//        System.out.println(vpfString.getValue());
+        
+       
+        
+    }
+           
+}
+
+
+
+
 /**
  *
  * @author viljinsky
  */
-public class ValuesPanelField extends JComponent {
+public class ValuesPanelField<T> extends JComponent {
     
     String fieldName;
-    Object fieldValue;
+    T fieldValue;
     JTextField textField;
     JLabel label;
 
-    public ValuesPanelField(String fieldName, Object fieldValue) {
+    public ValuesPanelField(String fieldName, T fieldValue) {
         setBorder(new EmptyBorder(0, 0, 3, 0));
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.fieldName = fieldName;
@@ -34,11 +81,12 @@ public class ValuesPanelField extends JComponent {
         add(textField);
     }
 
-    public Object getValue() {
-        return textField.getText();
+    public T getValue() {           
+        return fieldValue;
     }
 
-    public void setValue(Object fieldValue) {
+    public void setValue(T fieldValue) {
+        this.fieldValue = fieldValue;
         textField.setText(String.valueOf(fieldValue));
     }
     

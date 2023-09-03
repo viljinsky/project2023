@@ -184,6 +184,12 @@ class AppDB extends HashMap<String, Recordset> implements DB, DataModel {
                 columns[i] = meta.getColumnName(i+1);
             }            
             Recordset recordset = new Recordset(columns);
+            for(int i=1;i<=meta.getColumnCount();i++){
+                System.out.println(meta.getColumnClassName(i));
+                if (meta.getColumnTypeName(i).equals("integer")){
+                    recordset.classMap.put(recordset.columnIndex(meta.getColumnName(i)), Integer.class);
+                };
+            }
             while(res.next()){
                 Object[] p = new Object[columns.length];
                 for(int i=0;i<p.length;i++){

@@ -121,21 +121,30 @@ public class Grid extends JTable {
         }
     }
 
+//    public Grid(String[] columns){
+//        this(new Recordset());
+//    } 
+    
     public Grid() {
         this(new Recordset());
     }
 
+    String[] columns = new String[]{};
         
-    public Grid(Recordset recordset) {
+    public Grid(String... columns){
+        this(new Recordset(columns));
+    } 
+    public Grid(Recordset recordset,String... columns) {
         setAutoCreateColumnsFromModel(false);
         setAutoResizeMode(AUTO_RESIZE_OFF);
+        this.columns = columns.length==0?recordset.columns:columns;
         setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
         setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null);
         KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
         getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enter, "Solve");
         
         setModel(new GridModel(recordset));
-        setColumnModel(new GridColumnModel(recordset));
+        setColumnModel(new GridColumnModel(recordset,columns));
     }
 
     @Override
@@ -150,7 +159,7 @@ public class Grid extends JTable {
 
     public void setRecordset(Recordset recordset) {
         setModel(new GridModel(recordset));
-        setColumnModel(new GridColumnModel(recordset));
+        setColumnModel(new GridColumnModel(recordset,columns));
     }
 
     public void reload() {
