@@ -134,6 +134,7 @@ public class Grid extends JTable {
     public Grid(String... columns){
         this(new Recordset(columns));
     } 
+    
     public Grid(Recordset recordset,String... columns) {
         setAutoCreateColumnsFromModel(false);
         setAutoResizeMode(AUTO_RESIZE_OFF);

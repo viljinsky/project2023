@@ -37,7 +37,7 @@ public class FileManager implements CommandListener {
 
     public void create() throws Exception {
         file = null;
-        fileManagerListener.fileCreate(new FileManagerEvent(this, null));
+        fileManagerListener.fileCreate(new FileManagerEvent(this, new File("~tmp.db")));
     }
 
     public void open() throws Exception {

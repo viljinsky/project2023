@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ru.viljinsky.project2023.app2;
 
 import java.io.File;
@@ -27,7 +23,7 @@ class AppDB extends HashMap<String, Recordset> implements DB, DataModel {
     private static final String[] tables = {
         DAY_LIST, BELL_LIST, SHIFT, SHIFT_TYPE, SHIFT_DETAIL, SKILL, CURRICULUM, CURRICULUM_DETAIL, DEPART, TEACHER, ROOM, BUILDING,
         SUBJECT, SUBJECT_GROUP, WEEK, STREAM, SCHEDULE, LESSON_TYPE, GROUP_TYPE,
-        SUBJECT_DOMAIN, CONDITION, CURRICULUM_CONDITION, ATTR, GROUP_SEQUENCE};
+        SUBJECT_DOMAIN, CONDITION, CURRICULUM_CONDITION, ATTR, GROUP_SEQUENCE,SCHEDULE_STATE};
 
     private static final Map<String, String[]> columns = new HashMap<>();
 
@@ -95,13 +91,65 @@ class AppDB extends HashMap<String, Recordset> implements DB, DataModel {
         return columnHeaders.containsKey(columnName) ? columnHeaders.get(columnName) : columnName;
     }
 
-    public Class<?> columnCalss(String tableName, String clomnName) {
-        return Object.class;
+    private static final Map<String,Class<?>> columnClass = new HashMap<>();
+    static{
+        columnClass.put(DAY_ID, Integer.class);
+        columnClass.put(BELL_ID, Integer.class);
+        columnClass.put(SUBJECT_ID, Integer.class);
+        columnClass.put(SUBJECT_DOMAIN_ID, Integer.class);
+        columnClass.put(GROUP_ID, Integer.class);
+        columnClass.put(DEPART_ID, Integer.class);
+        columnClass.put(TEACHER_ID, Integer.class);
+        columnClass.put(ROOM_ID, Integer.class);
+        
+        columnClass.put(SKILL_ID, Integer.class);
+        columnClass.put(CURRICULUM_ID, Integer.class);
+        columnClass.put(BUILDING_ID, Integer.class);
+        columnClass.put(WEEK_ID, Integer.class);
+        
+        columnClass.put(HOUR_PER_DAY, Integer.class);
+        columnClass.put(HOUR_PER_WEEK, Integer.class);
+        columnClass.put(DIFFICULTY, Integer.class);
+        
+        columnClass.put(STREAM_ID, Integer.class);
+        columnClass.put(LESSON_TYPE_ID, Integer.class);
+        
+        columnClass.put(SHIFT_ID, Integer.class);
+        columnClass.put(SHIFT_TYPE_ID, Integer.class);
+        
+        columnClass.put(PROFILE_ID, Integer.class);
+        columnClass.put(PROFILE_TYPE_ID, Integer.class);
+        
+        columnClass.put(GROUP_TYPE_ID, Integer.class);
+        columnClass.put(CONDITION_ID, Integer.class);
+        
+        columnClass.put(GROUP_SEQUENCE_ID, Integer.class);
+        
+        columnClass.put(PUPIL_COUNT, Integer.class);
+        columnClass.put(BOY_COUNT, Integer.class);
+        columnClass.put(GERL_COUNT, Integer.class);
+        columnClass.put(SORT_ORDER, Integer.class);
+        
+        columnClass.put(SCHEDULE_STATE_ID, Integer.class);
+
+        
+        
+        
+    }
+    
+    public Class<?> columnClass(String tableName, String columnName) {
+        return columnClass.containsKey(columnName)? columnClass.get(columnName):Object.class;
     }
 
     Recordset createRecordset(String tableName) {
         if (columns.containsKey(tableName)) {
-            return new Recordset(tableName, columns.get(tableName));
+            Recordset recordset = new Recordset(tableName, columns.get(tableName));
+            for(int i=0;i<recordset.columnCount();i++){
+                if(columnClass.containsKey(recordset.columnName(i))){
+                    recordset.classMap.put(i, columnClass.get(recordset.columnName(i)));
+                }
+            }
+            return recordset;
         } else {
             throw new RuntimeException(String.format("table \"%s\"has not defined", tableName.toUpperCase()));
         }
@@ -233,6 +281,7 @@ class AppDB extends HashMap<String, Recordset> implements DB, DataModel {
     
     @Override
     public void close() throws Exception {
+        
         if (con != null) {
             con.close();
             con = null;

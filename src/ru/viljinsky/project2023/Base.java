@@ -123,11 +123,9 @@ public class Base extends Container implements WindowListener, Runnable {
     }
     
     public void open(){
-        throw new UnsupportedOperationException("open unsupported yet");
     }
     
     public void close(){
-        throw new UnsupportedOperationException("close unsupported yet");
     }
 
 }

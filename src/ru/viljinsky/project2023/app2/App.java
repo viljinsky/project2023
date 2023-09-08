@@ -2,14 +2,11 @@ package ru.viljinsky.project2023.app2;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import javax.swing.AbstractAction;
-import javax.swing.JMenu;
-import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import ru.viljinsky.project2023.Base;
+import ru.viljinsky.project2023.BaseDialog;
 import ru.viljinsky.project2023.CommandListener;
 import ru.viljinsky.project2023.CommandManager;
 import ru.viljinsky.project2023.DB;
@@ -17,8 +14,7 @@ import ru.viljinsky.project2023.FileManager;
 import ru.viljinsky.project2023.FileManagerEvent;
 import ru.viljinsky.project2023.FileManagerListener;
 import ru.viljinsky.project2023.GridAdapter;
-
-
+import ru.viljinsky.project2023.ValuesPanel;
 
 /**
  *
@@ -86,11 +82,27 @@ public class App extends Base implements FileManagerListener, CommandListener, C
 
     @Override
     public void fileCreate(FileManagerEvent e) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        ValuesPanel valuesPanel = new ValuesPanel();
+        int result = valuesPanel.showModal(getParent());
+        if (result == BaseDialog.RESULT_OK) {
+            if (e.file.exists()){
+                if(!e.file.delete()){
+                    throw new RuntimeException("File exists and cant bea deleted");
+                }
+            }
+            new CreateDB(e.file).run();
+            fileManager.open(e.file);
+        }
     }
 
     @Override
     public void fileOpen(FileManagerEvent e) throws Exception {
+        if (db != null) {
+            db.close();
+            db = null;
+        }
+        close();
         db = new AppDB(e.file);
         db.open();
         open();
@@ -139,7 +151,7 @@ public class App extends Base implements FileManagerListener, CommandListener, C
         addStatusBar();
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         new App().run();
     }
 

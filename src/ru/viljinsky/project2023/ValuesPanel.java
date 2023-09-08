@@ -28,6 +28,7 @@ public class ValuesPanel extends Container implements BaseDialogListener {
     }
     
     Values values;
+    
     public ValuesPanelListener valuesPanelListener;
 
     @Override
@@ -96,7 +97,8 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         return result;
     }
 
-    public void showModal(Component parent) {
+    int modalResult;
+    public Integer showModal(Component parent) {
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.setBorder(new EmptyBorder(6, 3, 6, 3));
         wrapper.add(this, BorderLayout.PAGE_START);
@@ -104,7 +106,9 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         baseDialog.setTitle(title);
         baseDialog.baseDialogListener = this;
         baseDialog.showModal(parent);
+        modalResult = baseDialog.modalResult;
         baseDialog.dispose();
+        return modalResult;
         //baseDialog = null;
     }
     
