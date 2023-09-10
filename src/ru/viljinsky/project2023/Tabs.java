@@ -1,21 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package ru.viljinsky.project2023.app2;
+package ru.viljinsky.project2023;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JTabbedPane;
-import ru.viljinsky.project2023.DB;
-import ru.viljinsky.project2023.Recordset;
 
 /**
  *
  * @author viljinsky
  */
-class Tabs extends JTabbedPane {
+public class Tabs extends JTabbedPane {
     
     JMenu menu = new JMenu("Tabs");
 

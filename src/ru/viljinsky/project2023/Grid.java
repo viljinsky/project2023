@@ -44,6 +44,7 @@ public class Grid extends JTable {
     JPopupMenu popupMenu  = new JPopupMenu();
     
     public void setCommand(ArrayList<Action> actions){
+        popupMenu = new JPopupMenu();
         for(Action a:actions){
             if (a==null){
                 popupMenu.addSeparator();

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ru.viljinsky.project2023;
 
 import java.awt.BorderLayout;
@@ -34,7 +30,8 @@ public class Base extends Container implements WindowListener, Runnable {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
+    
     protected final void addMenu(JMenu menu) {
         if (menuBar == null) {
             menuBar = new JMenuBar();
@@ -45,7 +42,23 @@ public class Base extends Container implements WindowListener, Runnable {
     protected void removeMenu(JMenu menu) {
         menuBar.remove(menu);
     }
+    
+    protected final void addMenuBar(){
+        if(menuBar==null){
+            menuBar = new JMenuBar();
+            if (frame!=null){
+                frame.setJMenuBar(menuBar);
+            }
+        }
+        
+    }
 
+    protected final void addMenuBar(JMenu menu){
+        if(menuBar==null){
+            menuBar = new JMenuBar();
+        }
+        menuBar.add(menu);
+    }
     protected final void addStatusBar() {
         if (statusBar == null) {
             statusBar = new StatusBar();

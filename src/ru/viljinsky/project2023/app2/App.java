@@ -1,5 +1,7 @@
 package ru.viljinsky.project2023.app2;
 
+import ru.viljinsky.project2023.Tabs;
+import ru.viljinsky.project2023.BaseTab;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;

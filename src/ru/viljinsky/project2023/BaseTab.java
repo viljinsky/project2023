@@ -1,15 +1,9 @@
-package ru.viljinsky.project2023.app2;
+package ru.viljinsky.project2023;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import javax.swing.Action;
 import javax.swing.JScrollPane;
-import ru.viljinsky.project2023.Base;
-import ru.viljinsky.project2023.CommandListener;
-import ru.viljinsky.project2023.Grid;
-import ru.viljinsky.project2023.GridAdapter;
-import ru.viljinsky.project2023.GridModel;
-import ru.viljinsky.project2023.Recordset;
-import ru.viljinsky.project2023.Values;
-import ru.viljinsky.project2023.ValuesPanel;
 
 /**
  *
@@ -20,7 +14,13 @@ public class BaseTab extends Base implements CommandListener {
     public static final String ADD = "add";
     public static final String EDIT = "edit";
     public static final String DELETE = "delete";
-    Grid grid = new Grid();
+    public Grid grid = new Grid();
+
+    public void setCommand(ArrayList<Action> actions) {
+        grid.setCommand(actions);
+    }
+    
+    
 
     Values selectedValues() {
         return grid.getSelectedValues();
@@ -65,6 +65,7 @@ public class BaseTab extends Base implements CommandListener {
     }
 
     public void setGridAdapter(GridAdapter gridAdapter) {
+        grid.removeGridArapter();
         grid.setGridAdapter(gridAdapter);
     }
 

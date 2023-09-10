@@ -289,7 +289,7 @@ class AppDB extends HashMap<String, Recordset> implements DB, DataModel {
     }
 
     @Override
-    public String[] primary() {
+    public String[] primary(String tableName) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

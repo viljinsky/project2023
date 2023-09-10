@@ -10,7 +10,7 @@ package ru.viljinsky.project2023;
  */
 public interface DB extends AutoCloseable {
     
-    public String[] primary();
+    public String[] primary(String tableName);
     
     public void open();
 
