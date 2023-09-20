@@ -42,15 +42,19 @@ class ValuesPanelEditor extends JTextField {
     }
     
     public Object getValue() {
-        return getText();
+        String s = getText().trim();
+        return s.isEmpty()?null:getText();
     }
     
     public Integer integerValue(){
-        return Integer.valueOf(getText());
+        String s = getText().trim();
+        return s.isEmpty()? null : Integer.valueOf(getText());
     }
     
     public Double doubleValue(){
-        return Double.valueOf(getText());
+        String s = getText().trim();
+        
+        return s.isEmpty()?null:Double.valueOf(getText());
     }
     
 }

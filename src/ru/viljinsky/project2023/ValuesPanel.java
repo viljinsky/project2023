@@ -39,25 +39,29 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         }
     }
 
-    private void addValuesField(String fieldName, Object fieldValue) {
-        ValuesPanelField field = new ValuesPanelField(fieldName, fieldValue);
+//    private void addValuesField(String fieldName, Object fieldValue) {
+//        ValuesPanelField field = new ValuesPanelField(fieldName, fieldValue);
+//        add(field);
+//    }
+    
+    private void addValuesField(Class<?> c,String fieldName, Object fieldValue) {
+        ValuesPanelField field = new ValuesPanelField(c,fieldName, fieldValue);
         add(field);
     }
-    
     public ValuesPanel(Recordset recordset,String... columns){
         columns = columns.length==0?recordset.columns:columns;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         for (String name : columns) {
             Class<?> c = recordset.getColumnClass(recordset.columnIndex(name));
-            System.out.println(c.getName());
-            addValuesField(name, null);
+//            System.out.println(c.getName());
+            addValuesField(c,name, null);
         }
     }
 
     public ValuesPanel(String... fieldName) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         for (String name : fieldName) {
-            addValuesField(name, null);
+            addValuesField(Object.class, name, null);
         }
     }
 

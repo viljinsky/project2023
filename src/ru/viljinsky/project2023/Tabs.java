@@ -27,6 +27,9 @@ public class Tabs extends JTabbedPane {
             setSelectedIndex(indexOfComponent(tab));
         }
     }
+    
+    public Tabs(){
+    }
 
     public Tabs(DB db) {
         for (Recordset recordset : db.tables()) {

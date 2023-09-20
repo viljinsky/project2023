@@ -30,19 +30,23 @@ public class BaseTab extends Base implements CommandListener {
         return new Values();
     }
 
-    void edit() {
+    protected void edit() {
+        Values values = grid.getSelectedValues();
+        if (values == null){
+            throw new RuntimeException("grid has not selected values");
+        }
         GridModel model = (GridModel) grid.getModel();
         Recordset recordset = model.getRecordset();
         ValuesPanel valuesPanel = new ValuesPanel(recordset.columns);
         valuesPanel.setTitle(getTitle());
-        valuesPanel.setValues(grid.getSelectedValues());
+        valuesPanel.setValues(values);
         valuesPanel.valuesPanelListener = e -> {
             e.values.print();
         };
         valuesPanel.showModal(getParent());
     }
 
-    void append() {
+    protected void append() {
         GridModel model = (GridModel) grid.getModel();
         Recordset recordset = model.getRecordset();
         ValuesPanel valuesPanel = new ValuesPanel(recordset.columns);
@@ -54,7 +58,10 @@ public class BaseTab extends Base implements CommandListener {
         valuesPanel.showModal(getParent());
     }
 
-    void delete() {
+    protected void delete() {
+        if (grid.getSelectedRowCount()==0){
+            throw new RuntimeException("there are no selection values");
+        }
         if (confirm("rmove selected recordset")) {
         }
     }
