@@ -13,7 +13,7 @@ public class GridColumnModel extends DefaultTableColumnModel {
         columns =  columns.length==0?recordset.columns:columns;
         for (int i = 0; i < columns.length; i++) {
             TableColumn column = new TableColumn(recordset.columnIndex(columns[i]));
-            column.setHeaderValue(columns[i]);
+            column.setHeaderValue(recordset.columnLabel(recordset.columnIndex(columns[i])));//columns[i]);
             column.setWidth(40);
             addColumn(column);
         }

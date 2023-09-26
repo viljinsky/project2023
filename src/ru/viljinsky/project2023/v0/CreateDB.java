@@ -1,4 +1,4 @@
-package ru.viljinsky.project2023.app2;
+package ru.viljinsky.project2023.v0;
 
 import java.io.File;
 import java.io.InputStream;

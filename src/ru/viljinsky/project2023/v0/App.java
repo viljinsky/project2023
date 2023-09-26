@@ -1,4 +1,4 @@
-package ru.viljinsky.project2023.app2;
+package ru.viljinsky.project2023.v0;
 
 import ru.viljinsky.project2023.Tabs;
 import ru.viljinsky.project2023.BaseTab;

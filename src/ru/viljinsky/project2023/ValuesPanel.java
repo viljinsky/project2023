@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ru.viljinsky.project2023;
 
 import java.awt.BorderLayout;
@@ -17,8 +13,11 @@ import javax.swing.border.EmptyBorder;
  * @author viljinsky
  */
 public class ValuesPanel extends Container implements BaseDialogListener {
+    
     String title = "valuesPanel";
 
+    Values values;
+    
     public String getTitle() {
         return title;
     }
@@ -27,7 +26,6 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         this.title = title;
     }
     
-    Values values;
     
     public ValuesPanelListener valuesPanelListener;
 
@@ -39,22 +37,23 @@ public class ValuesPanel extends Container implements BaseDialogListener {
         }
     }
 
-//    private void addValuesField(String fieldName, Object fieldValue) {
-//        ValuesPanelField field = new ValuesPanelField(fieldName, fieldValue);
-//        add(field);
-//    }
-    
-    private void addValuesField(Class<?> c,String fieldName, Object fieldValue) {
+    private ValuesPanelField addValuesField(Class<?> c,String fieldName, Object fieldValue) {
         ValuesPanelField field = new ValuesPanelField(c,fieldName, fieldValue);
         add(field);
+        return field;
     }
+    
+    public ValuesPanel(Recordset recordset){
+        this(recordset,recordset.columns);
+    }
+    
     public ValuesPanel(Recordset recordset,String... columns){
         columns = columns.length==0?recordset.columns:columns;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         for (String name : columns) {
-            Class<?> c = recordset.getColumnClass(recordset.columnIndex(name));
-//            System.out.println(c.getName());
-            addValuesField(c,name, null);
+            int index = recordset.columnIndex(name);
+            Class<?> c = recordset.getColumnClass(index);
+            addValuesField(c,name, null).label.setText(recordset.columnLabel(index));
         }
     }
 

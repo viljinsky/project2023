@@ -9,10 +9,10 @@ import javax.swing.Action;
  */
 public class GridAdapter{
     
-    private CommandManager commandManager;
-    private String[] commands;
+    private final CommandManager commandManager;
+    private final String[] commands;
     
-    public String commans(int i){
+    public String commands(int i){
         return i<commands.length?commands[i]:null;
     }
     

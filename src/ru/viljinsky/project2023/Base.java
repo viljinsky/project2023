@@ -23,6 +23,13 @@ public class Base extends Container implements WindowListener, Runnable {
     JMenuBar menuBar;
     String title = "no title";
 
+    public Base() {
+    }
+    
+    public Base(String title){
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }

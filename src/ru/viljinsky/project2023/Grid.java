@@ -36,7 +36,7 @@ public class Grid extends JTable {
         @Override
         public void mouseClicked(MouseEvent e) {
             if(e.getClickCount()==2){
-                gridAdapter.doCommand(gridAdapter.commans(1));
+                gridAdapter.doCommand(gridAdapter.commands(1));
             }
         }
     };
@@ -78,15 +78,15 @@ public class Grid extends JTable {
         
         String command;
         
-        command = gridAdapter.commans(0);
+        command = gridAdapter.commands(0);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,0), command);
         getActionMap().put(command, gridAdapter.actionByName(command));
         
-        command = gridAdapter.commans(1);
+        command = gridAdapter.commands(1);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), command);
         getActionMap().put(command, gridAdapter.actionByName(command));
         
-        command = gridAdapter.commans(2);
+        command = gridAdapter.commands(2);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0), command);
         getActionMap().put(command, gridAdapter.actionByName(command));
         
@@ -106,12 +106,12 @@ public class Grid extends JTable {
         if (gridAdapter!=null){
             
             String command ;
-            command = gridAdapter.commans(0);
+            command = gridAdapter.commands(0);
             getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,0));
             
-            command = gridAdapter.commans(1);
+            command = gridAdapter.commands(1);
             getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0));
-            command = gridAdapter.commans(2);
+            command = gridAdapter.commands(2);
             getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0));
             
             getInputMap().remove(KeyStroke.getKeyStroke(KeyEvent.VK_CONTEXT_MENU,0));

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ru.viljinsky.project2023;
 
 import java.util.ArrayList;
@@ -14,7 +10,7 @@ import java.util.Map;
  * @author viljinsky
  */
 public class Recordset extends ArrayList<Object[]> {
-    
+
     String name;
 
     public String getName() {
@@ -24,6 +20,7 @@ public class Recordset extends ArrayList<Object[]> {
     public void setName(String name) {
         this.name = name;
     }
+    
     public String[] columns = {};
 
     public Recordset() {
@@ -60,18 +57,21 @@ public class Recordset extends ArrayList<Object[]> {
     }
 
     public void print() {
-        for(String column:columns){
-            System.out.print(column+" ");
+        System.out.println("table : " + getName());
+        if (columns.length > 0) {
+            for (String column : columns) {
+                System.out.print(column + " ");
+            }
+            System.out.println();
         }
-        System.out.println();
-        
+
         if (isEmpty()) {
             System.out.println("recordset is empty");
         }
-        
-        for(Object[] p:this){
-            for(int i=0;i<columnCount();i++){
-                System.out.print(String.valueOf(p[i])+" ");
+
+        for (Object[] p : this) {
+            for (int i = 0; i < columnCount(); i++) {
+                System.out.print(String.valueOf(p[i]) + " ");
             }
             System.out.println("");
         }
@@ -84,6 +84,10 @@ public class Recordset extends ArrayList<Object[]> {
     public String columnName(int index) {
         return columns[index];
     }
+    
+    public String columnLabel(int index){
+        return "*"+columns[index];
+    }
 
     public int columnIndex(String column) {
         for (int i = 0; i < columns.length; i++) {
@@ -94,10 +98,10 @@ public class Recordset extends ArrayList<Object[]> {
         return -1;
     }
 
-    public Map<Integer,Class<?>> classMap = new HashMap<>();
-    
-    public Class<?> getColumnClass(int index) {        
-        return classMap.containsKey(index)?classMap.get(index):Object.class;
+    public Map<Integer, Class<?>> classMap = new HashMap<>();
+
+    public Class<?> getColumnClass(int index) {
+        return classMap.containsKey(index) ? classMap.get(index) : Object.class;
     }
 
     public void append() {
@@ -140,5 +144,5 @@ public class Recordset extends ArrayList<Object[]> {
         }
         return -1;
     }
-    
+
 }

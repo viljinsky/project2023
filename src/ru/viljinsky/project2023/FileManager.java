@@ -64,6 +64,9 @@ public class FileManager implements CommandListener {
     public void save() throws Exception {
         fileManagerListener.fileRename(new FileManagerEvent(this, null));
     }
+    
+    public void exit(){
+    }
 
     @Override
     public void doCommand(String command) {
@@ -85,6 +88,7 @@ public class FileManager implements CommandListener {
                     save();
                     break;
                 case EXIT:
+                    exit();
                     break;
                 default:
                     throw new Exception("command \"" + command + "\" - unsupported yet");
