@@ -36,6 +36,9 @@ public class Base extends Container implements WindowListener, Runnable {
 
     public void setTitle(String title) {
         this.title = title;
+        if (frame!=null){
+            frame.setTitle(title);
+        }
     }
     
     
