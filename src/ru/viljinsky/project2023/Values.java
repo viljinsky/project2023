@@ -47,7 +47,7 @@ public class Values extends HashMap<String, Object> {
     }
 
     public boolean isNull(String key) {
-        return containsKey(key) && (get(key)!=null);
+        return (!containsKey(key)) || (get(key)!=null);
     }
     
     public Object[] toArray(String... keys){

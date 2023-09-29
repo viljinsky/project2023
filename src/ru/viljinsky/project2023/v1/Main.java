@@ -65,7 +65,7 @@ class AppDB implements DB, DataModel {
     public void init() throws Exception {
 
         StringBuilder stringBuilder = new StringBuilder();
-        try (InputStream in = getClass().getResourceAsStream("./test.sql"); InputStreamReader reader = new InputStreamReader(in, "utf-8");) {
+        try (InputStream in = getClass().getResourceAsStream("../resource/test.sql"); InputStreamReader reader = new InputStreamReader(in, "utf-8");) {
 
             char[] buf = new char[8000];
             int count;

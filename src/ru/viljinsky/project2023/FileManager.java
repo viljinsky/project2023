@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class FileManager implements CommandListener {
     
-    File file = new File("test.db");
+    File file = new File("test33.db");
     
     public File recentFile(){
         if (file.exists()){
@@ -62,7 +62,8 @@ public class FileManager implements CommandListener {
     }
 
     public void save() throws Exception {
-        fileManagerListener.fileRename(new FileManagerEvent(this, null));
+        fileManagerListener.fileSave(new FileManagerEvent(this,file));
+        //fileManagerListener.fileRename(new FileManagerEvent(this, null));
     }
     
     public void exit(){

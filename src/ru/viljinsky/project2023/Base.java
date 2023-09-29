@@ -138,7 +138,7 @@ public class Base extends Container implements WindowListener, Runnable {
     }
 
     public void showMessage(Exception e) {
-        JOptionPane.showMessageDialog(getParent(), e.getMessage() == null ? "exception" : e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(getParent(), e.getMessage() == null ? "exception" : e.getMessage(), title+" "+e.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
     }
 
     public boolean confirm(String message) {

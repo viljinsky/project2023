@@ -8,6 +8,7 @@ drop table if exists bell_list;
 
 CREATE TABLE "day_list" (
 	"day_id"	INTEGER UNIQUE,
+        "day_short_name" TEXT NOT NULL UNIQUE,
 	"day_name"	TEXT NOT NULL UNIQUE,
 	PRIMARY KEY("day_id" AUTOINCREMENT)
 );
@@ -23,12 +24,13 @@ CREATE TABLE "bell_list" (
 CREATE TABLE "shift_type" (
 	"shift_type_id"	INTEGER NOT NULL,
 	"shift_type_name"	TEXT NOT NULL,
+        "shift_id" INTEGER,
 	PRIMARY KEY("shift_type_id")
 );
 
 CREATE TABLE "shift" (
 	"shift_id"	INTEGER,
-	"shift_type_id"	INTEGER,
+	"shift_type_id"	INTEGER NOT NULL default 1,
 	"shift_name"	TEXT NOT NULL,
 	UNIQUE("shift_type_id","shift_name"),
 	PRIMARY KEY("shift_id" AUTOINCREMENT)
@@ -37,9 +39,9 @@ CREATE TABLE "shift" (
 create table shift_detail (
     shift_id integer,day_id integer,
     bell_id integer, primary key (shift_id,day_id,bell_id),
-    FOREIGN KEY (shift_id) REFERENCES shift,
-    FOREIGN KEY (day_id) references day_list,
-    FOREIGN key (bell_id) REFERENCES bell_list );
+    FOREIGN KEY (shift_id) REFERENCES shift on delete cascade ,
+    FOREIGN KEY (day_id) references day_list on delete cascade,
+    FOREIGN key (bell_id) REFERENCES bell_list  on delete cascade);
 
 CREATE TABLE "pare" (
 	"pare_id"	INTEGER NOT NULL,
@@ -51,18 +53,18 @@ CREATE TABLE "pare_detail" (
 	"pare_id"	INTEGER,
 	"day_id"	INTEGER,
 	"bell_id"	INTEGER,
-	FOREIGN KEY("pare_id") REFERENCES "pare",
-	FOREIGN KEY("day_id") REFERENCES "day_list",
-	FOREIGN KEY("bell_id") REFERENCES "bell_list",
+	FOREIGN KEY("pare_id") REFERENCES "pare" on delete cascade,
+	FOREIGN KEY("day_id") REFERENCES "day_list" on delete cascade,
+	FOREIGN KEY("bell_id") REFERENCES "bell_list" on delete cascade,
 	PRIMARY KEY("pare_id","day_id","bell_id")
 );
-insert into day_list(day_id,day_name) values(1,'Понедельник');
-insert into day_list(day_id,day_name) values	(2,'вторник');
-insert into day_list(day_id,day_name) values	(3,'среда');
-insert into day_list(day_id,day_name) values	(4,'четверг');
-insert into day_list(day_id,day_name) values	(5,'пятница');
-insert into day_list(day_id,day_name) values	(6,'суббота');
-insert into day_list(day_id,day_name) values	(7,'воскресение');
+insert into day_list(day_id,day_short_name, day_name) values(1,'Пн','Понедельник');
+insert into day_list(day_id,day_short_name,day_name) values	(2,'Вт','вторник');
+insert into day_list(day_id,day_short_name,day_name) values	(3,'Ср','среда');
+insert into day_list(day_id,day_short_name,day_name) values	(4,'Чт','четверг');
+insert into day_list(day_id,day_short_name,day_name) values	(5,'Пт','пятница');
+insert into day_list(day_id,day_short_name,day_name) values	(6,'Сб','суббота');
+insert into day_list(day_id,day_short_name,day_name) values	(7,'Вс','воскресение');
 
 
 insert INTO bell_list (bell_id,time_start,time_end) values(1,'10:00','10,30');

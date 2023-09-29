@@ -11,17 +11,16 @@ import java.sql.DriverManager;
  * @author viljinsky
  */
 public class CreateDB implements Runnable {
-    
+
     File file;
-    static final String SOURCE = "/ru/viljinsky/project2023/app2/table.sql";
+    static final String SOURCE = "../resource/table.sql";
 
     public CreateDB(File file) {
-        if(file.exists()){
-            throw new RuntimeException(file+" already exists");
+        if (file.exists()) {
+            throw new RuntimeException(file + " already exists");
         }
         this.file = file;
     }
-    
 
     String[] tables() throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
@@ -34,18 +33,18 @@ public class CreateDB implements Runnable {
                 stringBuilder.append(buf, 0, count);
             }
 
+        } catch (NullPointerException e){
+            throw new RuntimeException("resource "+SOURCE+" nullPointerException");
         }
-        return stringBuilder.toString().replaceAll("--.*","").split(";");
+        return stringBuilder.toString().replaceAll("--.*", "").split(";");
     }
-
 
     @Override
     public void run() {
 
-
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection con = DriverManager.getConnection("jdbc:sqlite:"+file.getAbsolutePath());
+            Connection con = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
             for (String s : tables()) {
                 if (!s.trim().isEmpty()) {
                     con.prepareStatement(s.trim()).execute();
@@ -53,17 +52,17 @@ public class CreateDB implements Runnable {
             }
 
             con.close();
-            System.out.println(file.getName()+ " has been created");
+            System.out.println(file.getName() + " has been created");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    
+
     public static void main(String[] args) {
         File file = new File("tmp2.db");
-        if (file.exists()){
+        if (file.exists()) {
             file.delete();
         }
         new CreateDB(file).run();
